@@ -4,7 +4,7 @@ RUNNING THE MODEL
 
 To run with the base Python interpreter on your local machine:
 
-pip intall opencv-python
+pip install opencv-python
 
 pip install numpy
 
