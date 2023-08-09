@@ -1,6 +1,9 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
+import pandas as pd
+import os
+import datetime
 
 
 # Below are functions for analyzing and plotting neural network data
@@ -31,6 +34,39 @@ def plot_loss_over_time(loss_over_time_list, session_list):
     x_ticks = MultipleLocator(9)
     ax.xaxis.set_major_locator(x_ticks)
     plt.xlim(0, max(session_list))
-
     sns.despine()
-    plt.show()
+
+    y_max = 2
+    if max(loss_over_time_list) > y_max:
+        y_max = max(loss_over_time_list)
+    plt.ylim(0, y_max)
+
+    parent_dir = os.getcwd() + "/results/"
+    child_dir = datetime.datetime.now().strftime("%Y-%m-%d %Hh%Mm") + " results"
+    try:
+        os.mkdir(parent_dir + child_dir)
+    except FileExistsError:
+        pass
+    file_name = "/training_loss_plot.png"
+    plt.savefig(parent_dir + "/" + child_dir + file_name, dpi=300, bbox_inches='tight')
+
+
+def export_loss_table(loss_table_list, session_list):
+    """
+
+    Parameters
+    ----------
+
+    """
+
+    loss_dfs = [pd.DataFrame(x) for x in loss_table_list]
+    final_df = pd.concat(loss_dfs, keys=set(session_list))
+
+    parent_dir = os.getcwd() + "/results/"
+    child_dir = datetime.datetime.now().strftime("%Y-%m-%d %Hh%Mm") + " results"
+    try:
+        os.mkdir(parent_dir + child_dir)
+    except FileExistsError:
+        pass
+    file_name = "/training_loss_table.xlsx"
+    final_df.to_excel(parent_dir + child_dir + file_name, sheet_name="Loss per Class per Session")
