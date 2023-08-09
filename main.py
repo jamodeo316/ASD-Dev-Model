@@ -1,4 +1,5 @@
 import numpy as np
+import os
 from visual_input import *
 from NeuralNetwork import *
 
@@ -14,13 +15,13 @@ if __name__ == '__main__':
     class_list = ['trucks', 'dogs', 'cats', 'cars']
 
     # This is the path to the training image set for the local machine. UPDATE as needed
-    train_image_directory = "/Users/johnamodeo/Desktop/Models/ASD Model/image_set/train_subset"
+    train_image_directory = os.getcwd() + "/image_set/train_subset"
 
     # Dictionary of image class label (key)-list of image vector (value) pairs for training the neural network
     train_image_dict = image2matrix(train_image_directory, class_list, image_vector_size)
 
     # This is the path to the testing image set for the local machine. UPDATE as needed
-    test_image_directory = "/Users/johnamodeo/Desktop/Models/ASD Model/image_set/test_subset"
+    test_image_directory = os.getcwd() + "/image_set/test_subset"
 
     # Dictionary of image class label (key)-list of image vector (value) pairs for testing the neural network
     test_image_dict = image2matrix(test_image_directory, class_list, image_vector_size)

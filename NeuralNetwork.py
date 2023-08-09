@@ -248,6 +248,12 @@ class NeuralNetwork:
         list of session numbers to plot mean loss over sessions with plot_loss_over_time(),see
         analyze_data.py. This plot is rendered after training is complete.
 
+        The loss values for each image class are stored in a class losses list. After training on an
+        image class, the associated class losses list is added to a loss table dictionary, with the
+        image class as the key and the class losses as the value. After training on all image classes,
+        the loss table dictionary is added to a loss table list. This is combined with the session
+        number list mentioned above to create a loss dataframe that is exported to Excel.
+
         Parameters
         ----------
         training_image_dict
@@ -257,27 +263,36 @@ class NeuralNetwork:
         """
 
         loss_over_time = []
+        loss_table_list = []
         session_list = []
         for session in range(sessions):
             total_loss = 0
 
+            loss_table = {}
             for image_class in training_image_dict.keys():
                 image_list = training_image_dict[image_class]
                 encoded_label = encoded_label_dict[image_class]
 
+                class_losses = []
                 for image_vector in image_list:
                     layer_activities = self.feedforward(image_vector, use_release_maps=True)
                     loss = self.feedback(encoded_label, layer_activities, learn_r)
                     total_loss += loss
 
                     loss_over_time.append(loss)
+                    class_losses.append(loss)
                     session_list.append(session + 1)
+
+                loss_table[image_class] = class_losses
+
+            loss_table_list.append(loss_table)
 
             avg_loss = total_loss / len(training_image_dict.values())
             print(f"Session: {session + 1} of {sessions}, Loss: {avg_loss:.4f}")
 
         print("Training complete")
         plot_loss_over_time(loss_over_time, session_list)
+        export_loss_table(loss_table_list, session_list)
 
     def test(self, test_image_dict, encoded_label_dict, use_release_maps):
         """
