@@ -16,6 +16,10 @@ def plot_loss_over_time(loss_over_time_list, session_list):
     for bootstrapped 95% confidence intervals. These means with confidence intervals are plotted
     over the session numbers found in the session list.
 
+    A result folder, named according to the date and time of training, is made in the 'results'
+    directory of the model if one does not exist already. The plot mentioned above is saved in
+    this result folder as 'training_loss_plot'.
+
     Parameters
     ----------
     loss_over_time_list
@@ -53,10 +57,21 @@ def plot_loss_over_time(loss_over_time_list, session_list):
 
 def export_loss_table(loss_table_list, session_list):
     """
+    This function takes a loss table list comprised of dictionaries with image class (key)-list
+    of image class losses (value) pairs and iterates over it (list comprehension) to convert
+    each dictionary to a pandas dataframe. These dataframes are concatenated for a final
+    combined dataframe with session number in  the left most column, image set index in
+    the second leftmost column, and calculated loss according to image class in the remaining
+    columns (column header reflects image class name).
+
+    A result folder, named according to the date and time of training, is made in the 'results'
+    directory of the model if one does not exist already. The dataframe mentioned above is saved in
+    this result folder as 'training_loss_table'.
 
     Parameters
     ----------
-
+    loss_table_list
+    session_list
     """
 
     loss_dfs = [pd.DataFrame(x) for x in loss_table_list]
