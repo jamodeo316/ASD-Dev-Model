@@ -62,7 +62,7 @@ def export_loss_table(loss_table_list, session_list):
     each dictionary to a pandas dataframe. These dataframes are concatenated for a final
     combined dataframe with session number in  the left most column, image set index in
     the second leftmost column, and calculated loss according to image class in the remaining
-    columns (column header reflects image class name).
+    columns (column headers reflect image class names).
 
     A result folder, named according to the date and time of training, is made in the 'results'
     directory of the model if one does not exist already. The dataframe mentioned above is saved in
