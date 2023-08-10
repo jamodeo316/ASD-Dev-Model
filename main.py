@@ -1,5 +1,6 @@
 import numpy as np
 import os
+
 from visual_input import *
 from NeuralNetwork import *
 
