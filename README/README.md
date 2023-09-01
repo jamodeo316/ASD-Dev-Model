@@ -1,8 +1,5 @@
 # ASD-Model
-
-RUNNING THE MODEL
-
-To run with the base Python interpreter on your local machine:
+TO RUN THE MODEL WITH THE BASE PYTHON INTERPRETER ON YOUR LOCAL MACHINE:
 
 pip install opencv-python
 
